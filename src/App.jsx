@@ -8,10 +8,8 @@ import "./App.css";
 function App() {
   return (
     <>
-      {/* <section className="bg-slate-300 w-full h-[100vh] m-0 p-0"> */}
-        <main className="flex flex-col m-3 p-4 gap-5 bg-white rounded-md">
-          <div className="border-dashed p-3 border-4 rounded-md">
-
+      <main className="flex flex-col m-3 p-4 gap-5 bg-white rounded-md">
+        <div className="border-dashed p-3 border-4 rounded-md">
           <div className="">
             <h1 className="text-center m-5">Match and compare data</h1>
             <div className="flex flex-row justify-between  gap-10 mb-6">
@@ -38,10 +36,8 @@ function App() {
               </Fab>
             </div>
           </div>
-          </div>
-
-        </main>
-      {/* </section> */}
+        </div>
+      </main>
     </>
   );
 }
