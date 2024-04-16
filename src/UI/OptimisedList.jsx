@@ -9,9 +9,12 @@ import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
 import IconButton from "@mui/material/IconButton";
 import CommentIcon from "@mui/icons-material/Comment";
+import { useContext } from "react";
+import dataContext from "../Store/DataContext";
 
 function RenderRow(props) {
   const { index, style, checked, handleToggle } = props;
+  const dataCtx = useContext(dataContext);
   const value = index % 4;
   const labelId = `checkbox-list-label-${value}`;
 
@@ -47,7 +50,8 @@ function RenderRow(props) {
 }
 
 const OptimisedList = () => {
-  const [checked, setChecked] = useState([0]);
+  const [checked, setChecked] = useState([]);
+  const dataCtx = useContext(dataContext);
 
   const handleToggle = (value) => () => {
     const currentIndex = checked.indexOf(value);
@@ -58,9 +62,36 @@ const OptimisedList = () => {
     } else {
       newChecked.splice(currentIndex, 1);
     }
-
+    dataCtx.addToSkippingKey(newChecked);
     setChecked(newChecked);
   };
+  const headerList = dataCtx.csvHeader.map((item, index) => {
+    const labelId = `checkbox-list-label-${item}`;
+    return (
+      <ListItem
+        key={index}
+        secondaryAction={
+          <IconButton edge="end" aria-label="comments">
+            <CommentIcon />
+          </IconButton>
+        }
+        disablePadding
+      >
+        <ListItemButton role={undefined} onClick={handleToggle(item)} dense>
+          <ListItemIcon>
+            <Checkbox
+              edge="start"
+              checked={checked.indexOf(item) !== -1}
+              tabIndex={-1}
+              disableRipple
+              inputProps={{ "aria-labelledby": labelId }}
+            />
+          </ListItemIcon>
+          <ListItemText id={labelId} primary={`${item} `} />
+        </ListItemButton>
+      </ListItem>
+    );
+  });
 
   return (
     <Box
@@ -69,17 +100,10 @@ const OptimisedList = () => {
         height: 400,
         maxWidth: 360,
         bgcolor: "background.paper",
+        overflowY: "scroll",
       }}
     >
-      <FixedSizeList
-        height={400}
-        width={360}
-        itemSize={46}
-        itemCount={200}
-        overscanCount={5}
-      >
-        {(props) => <RenderRow {...props} checked={checked} handleToggle={handleToggle} />}
-      </FixedSizeList>
+      {headerList}
     </Box>
   );
 };

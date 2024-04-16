@@ -5,7 +5,57 @@ import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import OptimisedList from "./UI/OptimisedList";
 import Button from "@mui/material/Button";
 import "./App.css";
+import { useContext } from "react";
+import dataContext from "./Store/DataContext";
+import axios from "axios";
 function App() {
+  const dataCtx = useContext(dataContext);
+  const compareHandler = () => {
+    const {
+      primaryKey,
+      skippingKey,
+      firstInputFileName,
+      secondInputFileName,
+      firstInputCsvFiles,
+      secondInputCsvFiles,
+    } = dataCtx;
+    console.log(primaryKey, skippingKey);
+    console.log(firstInputFileName, secondInputFileName);
+    console.log(firstInputCsvFiles, secondInputCsvFiles);
+
+    const sendRequest = async () => {
+      // Create a FormData object
+      try {
+        const formData = new FormData();
+        // Append file data to FormData
+        formData.append("firstInputCsvFile", dataCtx.firstInputCsvFiles);
+        formData.append("secondInputCsvFile", dataCtx.secondInputCsvFiles);
+
+        // Append other parameters to FormData
+        formData.append("firstInputFileName", dataCtx.firstInputFileName);
+        formData.append("secondInputFileName", dataCtx.secondInputFileName);
+        formData.append("primaryKey", dataCtx.primaryKey);
+        formData.append("skippingKey", dataCtx.skippingKey);
+
+        // Make the POST request with Axios
+        const response = await axios.post(
+          "http://localhost:4000/compareData",
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        // Handle response
+        console.log("Response:", response.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    sendRequest();
+  };
   return (
     <>
       <main className="flex flex-col m-3 p-4 gap-5 bg-white rounded-md">
@@ -13,8 +63,8 @@ function App() {
           <div className="">
             <h1 className="text-center m-5">Match and compare data</h1>
             <div className="flex flex-row justify-between  gap-10 mb-6">
-              <Input label="Select Paper 1" />
-              <Input label="Select Paper 2" />
+              <Input label="Select Paper 1" state="first" />
+              <Input label="Select Paper 2" state="second" />
             </div>
             <Customselect label="Select Primary Key" />
           </div>
@@ -30,7 +80,7 @@ function App() {
             </div>
 
             <div className="flex self-end">
-              <Fab variant="extended" color="primary">
+              <Fab variant="extended" color="primary" onClick={compareHandler}>
                 <CompareArrowsIcon sx={{ mr: 1 }} />
                 Compare And Match
               </Fab>

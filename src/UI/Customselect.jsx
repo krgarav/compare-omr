@@ -4,16 +4,25 @@ import MenuItem from "@mui/material/MenuItem";
 import FormHelperText from "@mui/material/FormHelperText";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { useContext } from "react";
+import dataContext from "../Store/DataContext";
 
 const Customselect = (props) => {
-  const arr = new Array(50).fill("10").map((item, index) => {
+  const dataCtx = useContext(dataContext);
+
+  const arr = dataCtx.csvHeader.map((item, index) => {
     return (
-      <MenuItem key={index} value={10}>
-        Ten
+      <MenuItem key={index} value={item}>
+        {item}
       </MenuItem>
     );
   });
-  console.log(arr);
+  console.log(dataCtx.primaryKey);
+  const handleChange = (event) => {
+    // console.log(event.target.value);
+    dataCtx.addToPrimaryKey(event.target.value);
+  };
+
   return (
     <FormControl required sx={{ width: "100%" }}>
       <InputLabel id="demo-simple-select-required-label">
@@ -34,7 +43,7 @@ const Customselect = (props) => {
             },
           },
         }}
-        // onChange={handleChange}
+        onChange={handleChange}
       >
         {arr}
       </Select>
