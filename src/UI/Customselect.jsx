@@ -17,10 +17,11 @@ const Customselect = (props) => {
       </MenuItem>
     );
   });
-  console.log(dataCtx.primaryKey);
   const handleChange = (event) => {
-    // console.log(event.target.value);
-    dataCtx.addToPrimaryKey(event.target.value);
+    if (props.label === "Select Image Column") {
+    } else {
+      dataCtx.addToPrimaryKey(event.target.value);
+    }
   };
 
   return (
@@ -33,19 +34,31 @@ const Customselect = (props) => {
         id="demo-simple-select-required"
         // value={age}
         label={`${props.label} *`}
+        sx={{
+          "& .MuiSelect-select": {
+            // paddingTop: "10px",
+            // paddingBottom: "10px",
+            // height :"10px",
+            // marginTop : "20px"
+          },
+        }}
         MenuProps={{
           anchorOrigin: { vertical: "bottom", horizontal: "left" },
           transformOrigin: { vertical: "top", horizontal: "left" },
           getContentAnchorEl: null,
           PaperProps: {
             style: {
-              maxHeight: "200px", // Adjust the maximum height of the dropdown menu
+              maxHeight: "350px", // Adjust the maximum height of the dropdown menu
             },
           },
         }}
         onChange={handleChange}
+        // disabled={dataCtx.csvHeader.length === 0 ? true : false}
       >
-        {arr}
+        {dataCtx.csvHeader.length === 0 && (
+          <MenuItem value="">No Data present</MenuItem>
+        )}
+        {dataCtx.csvHeader.length !== 0 && arr}
       </Select>
       <FormHelperText>Required</FormHelperText>
     </FormControl>

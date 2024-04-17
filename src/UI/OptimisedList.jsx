@@ -98,12 +98,25 @@ const OptimisedList = () => {
       sx={{
         width: "100%",
         height: 400,
-        maxWidth: 360,
+        // maxWidth: 360,
         bgcolor: "background.paper",
         overflowY: "scroll",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
-      {headerList}
+      {dataCtx.csvHeader.length === 0 && (
+        <div className="mt-20">
+          <h1 className="flex justify-center align-middle">
+            <strong>No Header Present</strong>
+          </h1>
+          <h2 className="flex justify-center align-middle">
+            Please select CSV files
+          </h2>
+        </div>
+      )}
+      {dataCtx.csvHeader.length !== 0 && headerList}
+      {/* {headerList} */}
     </Box>
   );
 };

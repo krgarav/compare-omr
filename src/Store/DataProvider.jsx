@@ -9,6 +9,8 @@ const initialData = {
   secondInputFileName: "",
   firstInputCsvFiles: [],
   secondInputCsvFiles: [],
+  correctedCsv: {},
+  zipImageFile: [],
 };
 
 const DataProvider = (props) => {
@@ -70,6 +72,22 @@ const DataProvider = (props) => {
       };
     });
   };
+  const addToCorrectedCsvHandler = (data) => {
+    setDataState((item) => {
+      return {
+        ...item,
+        correctedCsv: data,
+      };
+    });
+  };
+  const addZipImageFileHandler = (file) => {
+    setDataState((item) => {
+      return {
+        ...item,
+        zipImageFile: file,
+      };
+    });
+  };
   const dataContext = {
     csvHeader: dataState.csvHeader,
     primaryKey: dataState.primaryKey,
@@ -78,6 +96,8 @@ const DataProvider = (props) => {
     secondInputFileName: dataState.secondInputFileName,
     firstInputCsvFiles: dataState.firstInputCsvFiles,
     secondInputCsvFiles: dataState.secondInputCsvFiles,
+    correctedCsv: dataState.correctedCsv,
+    zipImageFile: dataState.zipImageFile,
     addToCsvHeader: addToCsvHeaderHandler,
     addToPrimaryKey: addToPrimaryKeyHandler,
     addToSkippingKey: addToSkippingKeyHandler,
@@ -85,6 +105,8 @@ const DataProvider = (props) => {
     addSecondInputFileName: addSecondInputFileNameHandler,
     addFirstInputCsvFile: addFirstInputCsvFileHandler,
     addSecondInputCsvFile: addSecondInputCsvFileHandler,
+    addToCorrectedCsv: addToCorrectedCsvHandler,
+    addZipImageFile: addZipImageFileHandler,
   };
   return (
     <DataContext.Provider value={dataContext}>

@@ -7,6 +7,8 @@ const dataContext = React.createContext({
   secondInputFileName: "",
   firstInputCsvFiles: [],
   secondInputCsvFiles: [],
+  correctedCsv: {},
+  zipImageFile: [],
   addToCsvHeader: () => {},
   addToPrimaryKey: () => {},
   addToSkippingKey: () => {},
@@ -14,6 +16,8 @@ const dataContext = React.createContext({
   addSecondInputFileName: () => {},
   addFirstInputCsvFile: () => {},
   addSecondInputCsvFile: () => {},
+  addToCorrectedCsv: () => {},
+  addZipImageFile : ()=>{}
 });
 
 export default dataContext;
