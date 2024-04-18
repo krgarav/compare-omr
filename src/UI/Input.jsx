@@ -37,6 +37,7 @@ const Input = (props) => {
         case "third":
           (async function () {
             const images = await extractImagesFromZip(file);
+            console.log(images)
             datactx.addZipImageFile(images);
           })();
 
@@ -83,7 +84,7 @@ const Input = (props) => {
         <input
           id="picture"
           type="file"
-          className="flex h-10 w-full rounded-md border border-input bg-white px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium"
+          className="flex h-10 w-full rounded-md border  bg-white px-3 py-2 text-sm text-gray-400 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium   border-black-400 hover:border-blue-400"
           onChange={fileHandler}
           accept={props.type}
         />

@@ -4,14 +4,23 @@ import Fab from "@mui/material/Fab";
 import CompareArrowsIcon from "@mui/icons-material/CompareArrows";
 import OptimisedList from "../UI/OptimisedList";
 import Button from "@mui/material/Button";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import dataContext from "../Store/DataContext";
 import axios from "axios";
 import { useNavigate } from "react-router";
+import classes from "./Hompage.module.css";
 
 const Homepage = () => {
   const navigate = useNavigate();
   const dataCtx = useContext(dataContext);
+
+  useEffect(() => {
+    document.body.style.userSelect = "none";
+    return () => {
+      // Cleanup function to reset the style when the component unmounts
+      document.body.style.userSelect = "auto";
+    };
+  }, []);
   const compareHandler = () => {
     const {
       primaryKey,
@@ -20,18 +29,19 @@ const Homepage = () => {
       secondInputFileName,
       firstInputCsvFiles,
       secondInputCsvFiles,
+      imageColName,
     } = dataCtx;
-
-    // if (firstInputCsvFiles.length === 0) {
-    //   alert("Choose first CSV file");
-    //   return;
-    // } else if (secondInputCsvFiles.length === 0) {
-    //   alert("Choose second CSV file");
-    //   return;
-    // } else if (primaryKey === "") {
-    //   alert("Please select primary key");
-    //   return;
-    // }
+    console.log(imageColName);
+    if (firstInputCsvFiles.length === 0) {
+      alert("Choose first CSV file");
+      return;
+    } else if (secondInputCsvFiles.length === 0) {
+      alert("Choose second CSV file");
+      return;
+    } else if (primaryKey === "") {
+      alert("Please select primary key");
+      return;
+    }
 
     const sendRequest = async () => {
       // Create a FormData object
@@ -46,6 +56,7 @@ const Homepage = () => {
         formData.append("secondInputFileName", secondInputFileName);
         formData.append("primaryKey", primaryKey);
         formData.append("skippingKey", skippingKey);
+        formData.append("imageColName", imageColName);
 
         // Make the POST request with Axios
         const response = await axios.post(
@@ -78,20 +89,44 @@ const Homepage = () => {
         // document.body.removeChild(link);
         // URL.revokeObjectURL(url);
         // Handle response
+
+        const imgFile = dataCtx.zipImageFile;
+        const allRes = response.data;
+        const objArr = [];
+        for (let i = 0; i < allRes.length; i++) {
+          for (let j = 0; j < imgFile.length; j++) {
+            if (
+              allRes[i]["IMAGE_NAME"].replace(/^0+/, "") ===
+              imgFile[j].imgName.replace(/^0+/, "")
+            ) {
+              const obj = {
+                data: allRes[i],
+                img: imgFile[j],
+              };
+
+              objArr.push(obj);
+            }
+          }
+        }
+
+        console.log(objArr);
+        navigate("/correct_compare_csv", { state: objArr });
       } catch (err) {
         console.log(err);
       }
     };
     sendRequest();
-
-    // navigate("/correct_compare_csv", { replace: false });
   };
   return (
     <>
-      <main className="flex flex-col m-3 p-4 gap-5 bg-white rounded-md">
-        <div className="border-dashed p-3 border-4 rounded-md">
+      <main
+        className={`flex flex-col  p-4 gap-5 bg-white rounded-md ${classes.homepage}`}
+      >
+        <div
+          className={`border-dashed p-6 border-4 rounded-md  ${classes.innerBox}`}
+        >
           <div className="">
-            <h1 className="text-center m-5 text-black-900">
+            <h1 className="text-center mt-2 mb-6 text-black-300 text-3xl font-bold">
               MATCH AND COMPARE DATA
             </h1>
             <div className="flex flex-row justify-between  gap-10 mb-6">
@@ -113,7 +148,7 @@ const Homepage = () => {
             </div>
           </div>
           <div className="flex justify-between">
-            <div className="border pl-2 pb-2  bg-slate-100 rounded w-1/3">
+            <div className="border pl-2 pb-2  bg-slate-100 rounded w-1/3 ">
               <div className="flex flex-row pt-2 pb-2 justify-between self-center ">
                 <p className="text-sm font-semibold align-bottom self-center ">
                   Select Key For Skipping Comparison

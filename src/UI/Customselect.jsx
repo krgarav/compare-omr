@@ -19,7 +19,9 @@ const Customselect = (props) => {
   });
   const handleChange = (event) => {
     if (props.label === "Select Image Column") {
+      dataCtx.setImageColName(event.target.value);
     } else {
+      console.log("primary col trigerred");
       dataCtx.addToPrimaryKey(event.target.value);
     }
   };

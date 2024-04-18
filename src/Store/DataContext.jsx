@@ -2,6 +2,7 @@ import React from "react";
 const dataContext = React.createContext({
   csvHeader: [],
   primaryKey: "",
+  imageColName : "" , 
   skippingKey: [],
   firstInputFileName: "",
   secondInputFileName: "",
@@ -17,7 +18,8 @@ const dataContext = React.createContext({
   addFirstInputCsvFile: () => {},
   addSecondInputCsvFile: () => {},
   addToCorrectedCsv: () => {},
-  addZipImageFile : ()=>{}
+  addZipImageFile : ()=>{},
+  setImageColName : ()=>{}
 });
 
 export default dataContext;
