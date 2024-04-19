@@ -11,6 +11,8 @@ const dataContext = React.createContext({
   correctedCsv: {},
   zipImageFile: [],
   imageMappedData: [],
+  csvFile: [],
+  csvDataWithImage: [],
   addToCsvHeader: () => {},
   addToPrimaryKey: () => {},
   addToSkippingKey: () => {},
@@ -22,6 +24,8 @@ const dataContext = React.createContext({
   addZipImageFile: () => {},
   setImageColName: () => {},
   setImageMappedData: () => {},
+  setCsvFile: () => {},
+  setCsvDataWithImage: () => {},
 });
 
 export default dataContext;

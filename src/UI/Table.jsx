@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -8,7 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
 
-import SaveIcon from '@mui/icons-material/Save';
+import SaveIcon from "@mui/icons-material/Save";
 import dataContext from "../Store/DataContext";
 
 function createData(name, calories, fat, carbs, protein) {
@@ -16,12 +16,43 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const TableCol = (props) => {
-  const { data } = props.data;
-  const dataCtx = useContext(dataContext)
+  // const [objData, setObjData] = useState([]);
+  const [resultObj, setResultObj] = useState([]);
+  const inputRef = useRef();
+  const dataCtx = useContext(dataContext);
+  useEffect(() => {
+    inputRef.current.value = props.data.corrected;
+  }, [inputRef]);
+  useEffect(() => {
+    // setObjData(props.data);
+
+    setResultObj(props.data);
+  }, [props.data]);
+
   const rows = [
-    createData(props.data.PRIMARY,props.data.COLUMN_NAME, props.data.FILE_1_DATA, props.data.FILE_2_DATA),
-      
+    createData(
+      resultObj.PRIMARY,
+      resultObj.COLUMN_NAME,
+      resultObj.FILE_1_DATA,
+      resultObj.FILE_2_DATA
+    ),
   ];
+  const saveHandler = () => {
+    const csvFile = dataCtx.csvFile;
+
+    if (inputRef.current) {
+      for (let i = 0; i < csvFile.length; i++) {
+        if (
+          csvFile[i][dataCtx.primaryKey].trim() === resultObj.PRIMARY.trim()
+        ) {
+          csvFile[i][resultObj.COLUMN_NAME] = inputRef.current.value;
+        }
+      }
+      // for(let j=0 ; j< cs)
+      dataCtx.setCsvFile(csvFile);
+    }
+    dataCtx. .corrected = inputRef.current.value;
+  };
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="caption table">
@@ -33,7 +64,7 @@ const TableCol = (props) => {
             <TableCell>PRIMARY</TableCell>
             <TableCell align="right">COLUMN_NAME</TableCell>
             <TableCell align="right">FILE_1_DATA</TableCell>
-            <TableCell align="right">FILE_1_DATA</TableCell>
+            <TableCell align="right">FILE_2_DATA</TableCell>
             <TableCell align="right">ENTER CORRECTED DATA</TableCell>
             <TableCell align="right">SAVE BUTTON</TableCell>
           </TableRow>
@@ -42,13 +73,29 @@ const TableCol = (props) => {
           {rows.map((row) => (
             <TableRow key={row.name}>
               <TableCell component="th" scope="row">
-              {dataCtx.primaryKey} :  {row.name}
+                {dataCtx.primaryKey} : {row.name}
               </TableCell>
               <TableCell align="right">{row.calories}</TableCell>
               <TableCell align="right">{row.fat}</TableCell>
               <TableCell align="right">{row.carbs}</TableCell>
-              <TableCell align="right"><input type="text" placeholder="Enter correct answer" className="border p-3 w-2/3"/></TableCell>
-              <TableCell align="right"><Button  startIcon={<SaveIcon/>} variant="outlined" color="success">SAVE</Button></TableCell>
+              <TableCell align="right">
+                <input
+                  type="text"
+                  placeholder="Enter correct answer"
+                  className="border p-3 w-2/3"
+                  ref={inputRef}
+                />
+              </TableCell>
+              <TableCell align="right">
+                <Button
+                  startIcon={<SaveIcon />}
+                  variant="outlined"
+                  color="success"
+                  onClick={saveHandler}
+                >
+                  SAVE
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

@@ -13,6 +13,8 @@ const initialData = {
   zipImageFile: [],
   imageColName: "",
   imageMappedData: [],
+  csvFile: [],
+  csvDataWithImage: [],
 };
 
 const DataProvider = (props) => {
@@ -106,6 +108,22 @@ const DataProvider = (props) => {
       };
     });
   };
+  const setCsvFileHandler = (data) => {
+    setDataState((item) => {
+      return {
+        ...item,
+        csvFile: data,
+      };
+    });
+  };
+  const setCsvDataWithImageHandler = (data) => {
+    setDataState((item) => {
+      return {
+        ...item,
+        csvDataWithImage: data,
+      };
+    });
+  };
   const dataContext = {
     csvHeader: dataState.csvHeader,
     primaryKey: dataState.primaryKey,
@@ -118,6 +136,9 @@ const DataProvider = (props) => {
     zipImageFile: dataState.zipImageFile,
     imageColName: dataState.imageColName,
     imageMappedData: dataState.imageMappedData,
+    csvFile: dataState.csvFile,
+    csvDataWithImage: dataState.csvDataWithImage,
+
     addToCsvHeader: addToCsvHeaderHandler,
     addToPrimaryKey: addToPrimaryKeyHandler,
     addToSkippingKey: addToSkippingKeyHandler,
@@ -129,6 +150,8 @@ const DataProvider = (props) => {
     addZipImageFile: addZipImageFileHandler,
     setImageColName: setImageColNameHandler,
     setImageMappedData: setImageMappedDataHandler,
+    setCsvFile: setCsvFileHandler,
+    setCsvDataWithImage: setCsvDataWithImageHandler,
   };
   return (
     <DataContext.Provider value={dataContext}>

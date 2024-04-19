@@ -68,8 +68,12 @@ const Homepage = () => {
             },
           }
         );
-        console.log(response.data);
-        dataCtx.addToCorrectedCsv(response.data);
+        console.log(response.data.csvFile);
+        dataCtx.setCsvFile(response.data.csvFile);
+        const modifiedRes = response.data.data.map((item) => {
+          return { ...item, corrected: "" };
+        });
+        dataCtx.addToCorrectedCsv(modifiedRes);
         // const csvData = response.data;
         // const blob = new Blob([csvData], { type: "text/csv" });
 
@@ -91,7 +95,7 @@ const Homepage = () => {
         // Handle response
 
         const imgFile = dataCtx.zipImageFile;
-        const allRes = response.data;
+        const allRes = response.data.data;
         const objArr = [];
 
         for (let i = 0; i < allRes.length; i++) {
@@ -101,7 +105,7 @@ const Homepage = () => {
               imgFile[j].imgName.replace(/^0+/, "")
             ) {
               const obj = {
-                data: allRes[i],
+                data: { ...allRes[i], corrected: "" },
                 img: imgFile[j],
               };
               objArr.push(obj);
@@ -111,7 +115,7 @@ const Homepage = () => {
 
         // console.log(objArr);
         dataCtx.setImageMappedData(objArr);
-        navigate("/correct_compare_csv", { state: objArr });
+        navigate("/correct_compare_csv");
       } catch (err) {
         console.log(err);
       }
