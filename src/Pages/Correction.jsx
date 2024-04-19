@@ -25,27 +25,51 @@ const Correction = () => {
   console.log(dataCtx.zipImageFile);
   console.log(dataCtx.correctedCsv);
   const prevHandler = () => {
-    setCurrIndex((prev) => prev - 1);
+    setCurrIndex((prev) => {
+      if (prev === 0) {
+        return prev;
+      } else {
+        return prev - 1;
+      }
+    });
   };
+
   const nextHandler = () => {
     console.log("next called");
-    setCurrIndex((prev) => prev + 1);
+    setCurrIndex((prev) => {
+      console.log(state.length);
+      if (prev === state.length - 1) {
+        return prev;
+      } else {
+        return prev + 1;
+      }
+    });
   };
+  console.log(state[currIndex]);
   return (
     <>
       <div className={`flex flex-row justify-between ${classes.correction} `}>
-        <div className="w-full h-screen border-black-300 border  ">
-          <div className="h-full">
+        <div className="w-full  border-black-300 border  ">
+          <h1 className={`text-center text-3xl font-bold ${classes.imgHead}`}>
+              Image Name : {state[currIndex].img.imgName}
+            </h1>
             <img
-              src="https://qph.cf2.quoracdn.net/main-qimg-8680d5826c698565ab7a1d35f28889a6-lq"
-              className="w-full h-full object-contain p-5"
+              src={state[currIndex].img.imgUrl}
+              className={`w-full  object-contain p-5 ${classes.imgContainer}`}
               alt="omr sheet"
             />
-          </div>
+
+        
         </div>
-        <div className="w-full border-black-800 border-2">
-          <h1>hello</h1>
-          <Table />
+        <div className="w-full border-black-800 border-2 ">
+          <h1 className="text-center text-3xl font-bold">
+            {currIndex + 1} of {state.length}
+          </h1>
+
+          <div className="flex flex-col justify-center pt-5 pl-2 pr-2 pb-3">
+            <Table data={state[currIndex].data} />
+          </div>
+
           <div className="flex justify-around">
             <Button
               variant="contained"

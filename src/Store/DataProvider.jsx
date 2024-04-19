@@ -12,6 +12,7 @@ const initialData = {
   correctedCsv: {},
   zipImageFile: [],
   imageColName: "",
+  imageMappedData: [],
 };
 
 const DataProvider = (props) => {
@@ -97,6 +98,14 @@ const DataProvider = (props) => {
       };
     });
   };
+  const setImageMappedDataHandler = (data) => {
+    setDataState((item) => {
+      return {
+        ...item,
+        imageMappedData: data,
+      };
+    });
+  };
   const dataContext = {
     csvHeader: dataState.csvHeader,
     primaryKey: dataState.primaryKey,
@@ -108,6 +117,7 @@ const DataProvider = (props) => {
     correctedCsv: dataState.correctedCsv,
     zipImageFile: dataState.zipImageFile,
     imageColName: dataState.imageColName,
+    imageMappedData: dataState.imageMappedData,
     addToCsvHeader: addToCsvHeaderHandler,
     addToPrimaryKey: addToPrimaryKeyHandler,
     addToSkippingKey: addToSkippingKeyHandler,
@@ -118,6 +128,7 @@ const DataProvider = (props) => {
     addToCorrectedCsv: addToCorrectedCsvHandler,
     addZipImageFile: addZipImageFileHandler,
     setImageColName: setImageColNameHandler,
+    setImageMappedData: setImageMappedDataHandler,
   };
   return (
     <DataContext.Provider value={dataContext}>

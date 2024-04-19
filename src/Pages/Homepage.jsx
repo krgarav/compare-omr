@@ -93,6 +93,7 @@ const Homepage = () => {
         const imgFile = dataCtx.zipImageFile;
         const allRes = response.data;
         const objArr = [];
+
         for (let i = 0; i < allRes.length; i++) {
           for (let j = 0; j < imgFile.length; j++) {
             if (
@@ -103,13 +104,13 @@ const Homepage = () => {
                 data: allRes[i],
                 img: imgFile[j],
               };
-
               objArr.push(obj);
             }
           }
         }
 
-        console.log(objArr);
+        // console.log(objArr);
+        dataCtx.setImageMappedData(objArr);
         navigate("/correct_compare_csv", { state: objArr });
       } catch (err) {
         console.log(err);

@@ -10,3 +10,10 @@
   background-image: url("/csvcompare.jpg");
   /* object-fit: cover; */
 }
+
+.imgHead{
+  height: 5vh;
+}
+.imgContainer{
+  height: 92dvh;
+}
