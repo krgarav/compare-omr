@@ -43,7 +43,7 @@ const Correction = () => {
       }
     });
   };
-
+  console.log(currIndex);
   // Function to convert JSON to CSV
   const convertToCsv = (jsonData) => {
     const headers = Object.keys(jsonData[0]);
@@ -76,7 +76,7 @@ const Correction = () => {
       <div
         className={`flex lg:flex-row md:flex-col justify-between animate-slide-left-to-right ${classes.correction} `}
       >
-        <div className="w-full  border-black-300 border  ">
+        <div className="w-full">
           <div className={`text-center text-3xl font-bold ${classes.imgdiv}`}>
             <h1 className={`text-center text-3xl font-bold ${classes.imgHead}`}>
               Image Name : {state[currIndex].img.imgName}
@@ -89,11 +89,10 @@ const Correction = () => {
             alt="omr sheet"
           />
         </div>
-        <div className="w-full border-black-800 border-2 ">
+        <div className="w-full  ">
           <h1 className="text-center text-3xl font-bold">
             {currIndex + 1} of {state.length}
           </h1>
-
           <div className="pt-5 pl-4 pr-4 pb-3 h-2/3  bg-opacity-15 bg-black rounded mb-5">
             <Table data={state[currIndex].data} />
           </div>

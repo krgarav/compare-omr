@@ -30,8 +30,8 @@ const Homepage = () => {
       firstInputCsvFiles,
       secondInputCsvFiles,
       imageColName,
+      zipImageFile,
     } = dataCtx;
-    console.log(imageColName);
     if (firstInputCsvFiles.length === 0) {
       alert("Choose first CSV file");
       return;
@@ -41,6 +41,8 @@ const Homepage = () => {
     } else if (primaryKey === "") {
       alert("Please select primary key");
       return;
+    } else if (zipImageFile.length === 0) {
+      alert("Please select image zip file");
     }
 
     const sendRequest = async () => {
@@ -161,9 +163,7 @@ const Homepage = () => {
               </div>
               <OptimisedList />
             </div>
-            <div>
-              
-            </div>
+            <div></div>
 
             <div className="flex self-end">
               <Fab variant="extended" color="primary" onClick={compareHandler}>

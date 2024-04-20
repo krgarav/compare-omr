@@ -37,7 +37,6 @@ const Input = (props) => {
         case "third":
           (async function () {
             const images = await extractImagesFromZip(file);
-            console.log(images)
             datactx.addZipImageFile(images);
           })();
 
