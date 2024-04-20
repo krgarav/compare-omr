@@ -8,13 +8,11 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Table from "../UI/Table";
 import { useLocation } from "react-router";
 import DownloadIcon from "@mui/icons-material/Download";
-// import { parse } from "json2csv";
+
 const Correction = () => {
   const [currIndex, setCurrIndex] = useState(0);
-  const [csvObj, setCsvObj] = useState({});
-  const [currImgUrl, setImgUrl] = useState("");
   const dataCtx = useContext(dataContext);
-  const location = useLocation();
+ 
   const state = dataCtx.imageMappedData;
   useEffect(() => {
     document.body.style.userSelect = "none";
@@ -90,10 +88,10 @@ const Correction = () => {
           />
         </div>
         <div className="w-full  ">
-          <h1 className="text-center text-3xl font-bold">
+          <h1 className="text-center text-3xl font-bold m-5">
             {currIndex + 1} of {state.length}
           </h1>
-          <div className="pt-5 pl-4 pr-4 pb-3 h-2/3  bg-opacity-15 bg-black rounded mb-5">
+          <div className="pt-5 pl-4 pr-4 pb-3 h-2/3  bg-opacity-15 bg-black rounded mb-5 mr-5">
             <Table data={state[currIndex].data} />
           </div>
 
