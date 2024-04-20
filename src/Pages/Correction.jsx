@@ -6,14 +6,41 @@ import { Button } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Table from "../UI/Table";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import DownloadIcon from "@mui/icons-material/Download";
 
 const Correction = () => {
   const [currIndex, setCurrIndex] = useState(0);
   const dataCtx = useContext(dataContext);
- 
   const state = dataCtx.imageMappedData;
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (dataCtx.imageMappedData.length === 0) {
+      navigate("/comparecsv", { replace: true });
+    }
+  }, []);
+
+  useEffect(() => {
+    const confirmExit = (e) => {
+      // Cancel the event
+      e.preventDefault();
+      // Chrome requires returnValue to be set
+      e.returnValue = "";
+
+      // Optionally, display a confirmation dialog
+      const confirmationMessage = "Are you sure you want to leave this page?";
+      e.returnValue = confirmationMessage;
+      return confirmationMessage;
+    };
+
+    // Add event listener when the component mounts
+    window.addEventListener("beforeunload", confirmExit);
+
+    // Remove event listener when the component unmounts
+    return () => {
+      window.removeEventListener("beforeunload", confirmExit);
+    };
+  }, []); // Empty dependency array to run effect only once on mount
   useEffect(() => {
     document.body.style.userSelect = "none";
     return () => {
@@ -41,8 +68,6 @@ const Correction = () => {
       }
     });
   };
-  console.log(currIndex);
-  // Function to convert JSON to CSV
   const convertToCsv = (jsonData) => {
     const headers = Object.keys(jsonData[0]);
     const csvHeader = headers.join(",") + "\n";
