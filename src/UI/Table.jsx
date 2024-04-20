@@ -10,6 +10,7 @@ import { Button } from "@mui/material";
 
 import SaveIcon from "@mui/icons-material/Save";
 import dataContext from "../Store/DataContext";
+import { toast } from "react-toastify";
 
 function createData(name, calories, fat, carbs, protein) {
   return { name, calories, fat, carbs, protein };
@@ -21,8 +22,9 @@ const TableCol = (props) => {
   const inputRef = useRef();
   const dataCtx = useContext(dataContext);
   useEffect(() => {
+    console.log(props.data);
     inputRef.current.value = props.data.corrected;
-  }, [inputRef]);
+  }, [dataCtx.imageMappedData]);
   useEffect(() => {
     // setObjData(props.data);
 
@@ -48,14 +50,33 @@ const TableCol = (props) => {
           csvFile[i][resultObj.COLUMN_NAME] = inputRef.current.value;
         }
       }
-      // for(let j=0 ; j< cs)
+      const mappedData = [...dataCtx.imageMappedData];
+      for (let j = 0; j < mappedData.length; j++) {
+        console.log(resultObj.PRIMARY.trim());
+        if (mappedData[j].data.PRIMARY.trim() === resultObj.PRIMARY.trim()) {
+          mappedData[j].data.corrected = inputRef.current.value;
+        }
+      }
+
+      dataCtx.setImageMappedData(mappedData);
       dataCtx.setCsvFile(csvFile);
     }
-    dataCtx. .corrected = inputRef.current.value;
+    toast("Saved the corrected file", {
+      position: "bottom-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+     
+    });
   };
+
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label="caption table">
+      <Table aria-label="caption table">
         <caption>
           Match and correct the data According to above data table
         </caption>
@@ -84,6 +105,7 @@ const TableCol = (props) => {
                   placeholder="Enter correct answer"
                   className="border p-3 w-2/3"
                   ref={inputRef}
+                  defaultValue={props.data.corrected}
                 />
               </TableCell>
               <TableCell align="right">

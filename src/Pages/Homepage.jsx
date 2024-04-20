@@ -130,30 +130,29 @@ const Homepage = () => {
         <div
           className={`border-dashed p-6 border-4 rounded-md  ${classes.innerBox}`}
         >
-          <div className="">
-            <h1 className="text-center mt-2 mb-6 text-black-300 text-3xl font-bold">
-              MATCH AND COMPARE DATA
-            </h1>
-            <div className="flex flex-row justify-between  gap-10 mb-6">
-              <Input label="Select Paper 1" state="first" type="text/csv" />
-              <Input label="Select Paper 2" state="second" type="text/csv" />
-              <Input
-                label="Select Image Zipfile"
-                state="third"
-                type="application/zip,application/x-zip-compressed"
-              />
+          <h1 className="text-center mt-2 mb-6 text-black-300 text-3xl font-bold">
+            MATCH AND COMPARE DATA
+          </h1>
+          <div className="flex flex-row justify-between  gap-10 mb-6">
+            <Input label="Select Paper 1" state="first" type="text/csv" />
+            <Input label="Select Paper 2" state="second" type="text/csv" />
+            <Input
+              label="Select Image Zipfile"
+              state="third"
+              type="application/zip,application/x-zip-compressed"
+            />
+          </div>
+          <div className="flex flex-row justify-between  gap-10 mb-6">
+            <div className="w-1/2">
+              <Customselect label="Select Primary Key" />
             </div>
-            <div className="flex flex-row justify-between  gap-10 mb-6">
-              <div className="w-1/2">
-                <Customselect label="Select Image Column" />
-              </div>
-              <div className="w-1/2">
-                <Customselect label="Select Primary Key" />
-              </div>
+            <div className="w-1/2">
+              <Customselect label="Select Image Column" />
             </div>
           </div>
+
           <div className="flex justify-between">
-            <div className="border pl-2 pb-2  bg-slate-100 rounded w-1/3 ">
+            <div className="bg-opacity-60 border pl-2 pb-2  bg-slate-100 rounded lg:w-1/3  ">
               <div className="flex flex-row pt-2 pb-2 justify-between self-center ">
                 <p className="text-sm font-semibold align-bottom self-center ">
                   Select Key For Skipping Comparison
@@ -161,6 +160,9 @@ const Homepage = () => {
                 <Button>Clear All</Button>
               </div>
               <OptimisedList />
+            </div>
+            <div>
+              
             </div>
 
             <div className="flex self-end">

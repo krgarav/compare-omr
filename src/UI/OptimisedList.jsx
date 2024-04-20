@@ -97,12 +97,14 @@ const OptimisedList = () => {
     <Box
       sx={{
         width: "100%",
-        height: "50dvh",
-        // maxWidth: 360,
-        bgcolor: "background.paper",
+        minHeight: "50dvh",
+        maxHeight: "50dvh",
+        // bgcolor: "background.paper",
         overflowY: "scroll",
         display: "flex",
         flexDirection: "column",
+        // backgroundColor: "transparent",
+        bgcolor: "transparent"
       }}
     >
       {dataCtx.csvHeader.length === 0 && (
@@ -116,7 +118,6 @@ const OptimisedList = () => {
         </div>
       )}
       {dataCtx.csvHeader.length !== 0 && headerList}
-      {/* {headerList} */}
     </Box>
   );
 };

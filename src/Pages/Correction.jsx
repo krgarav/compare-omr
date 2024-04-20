@@ -7,6 +7,7 @@ import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Table from "../UI/Table";
 import { useLocation } from "react-router";
+import DownloadIcon from "@mui/icons-material/Download";
 // import { parse } from "json2csv";
 const Correction = () => {
   const [currIndex, setCurrIndex] = useState(0);
@@ -15,12 +16,14 @@ const Correction = () => {
   const dataCtx = useContext(dataContext);
   const location = useLocation();
   const state = dataCtx.imageMappedData;
-  console.log(state);
-  // useEffect(() => {}, []);
   useEffect(() => {
-    // setCsvObj(dataCtx.correctedCsv[currIndex]);
-    console.log(currIndex);
-  }, [currIndex]);
+    document.body.style.userSelect = "none";
+    return () => {
+      // Cleanup function to reset the style when the component unmounts
+      document.body.style.userSelect = "auto";
+    };
+  }, []);
+
   const prevHandler = () => {
     setCurrIndex((prev) => {
       if (prev === 0) {
@@ -70,11 +73,16 @@ const Correction = () => {
 
   return (
     <>
-      <div className={`flex flex-row justify-between ${classes.correction} `}>
+      <div
+        className={`flex lg:flex-row md:flex-col justify-between animate-slide-left-to-right ${classes.correction} `}
+      >
         <div className="w-full  border-black-300 border  ">
-          <h1 className={`text-center text-3xl font-bold ${classes.imgHead}`}>
-            Image Name : {state[currIndex].img.imgName}
-          </h1>
+          <div className={`text-center text-3xl font-bold ${classes.imgdiv}`}>
+            <h1 className={`text-center text-3xl font-bold ${classes.imgHead}`}>
+              Image Name : {state[currIndex].img.imgName}
+            </h1>
+          </div>
+
           <img
             src={state[currIndex].img.imgUrl}
             className={`w-full  object-contain p-5 ${classes.imgContainer}`}
@@ -86,7 +94,7 @@ const Correction = () => {
             {currIndex + 1} of {state.length}
           </h1>
 
-          <div className="flex flex-col justify-center pt-5 pl-2 pr-2 pb-3">
+          <div className="pt-5 pl-4 pr-4 pb-3 h-2/3  bg-opacity-15 bg-black rounded mb-5">
             <Table data={state[currIndex].data} />
           </div>
 
@@ -100,8 +108,9 @@ const Correction = () => {
             </Button>
             <Button
               variant="contained"
-              startIcon={<ArrowBackIosIcon />}
+              endIcon={<DownloadIcon />}
               onClick={downloadHandler}
+              color="secondary"
             >
               DOWNLOAD CSV
             </Button>

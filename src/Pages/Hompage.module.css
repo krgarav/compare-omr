@@ -9,8 +9,9 @@
   width: 100dvw;
   height: 100dvh;
   background-image: url("/csvcompare.jpg");
-  object-fit: cover;
+  background-size: cover;
+  background-position: center;
 }
 .innerBox {
- height: 100dvh;
+  height: 100dvh;
 }
