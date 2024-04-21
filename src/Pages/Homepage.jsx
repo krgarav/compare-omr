@@ -114,8 +114,6 @@ const Homepage = () => {
             }
           }
         }
-
-        // console.log(objArr);
         dataCtx.setImageMappedData(objArr);
         navigate("/correct_compare_csv");
       } catch (err) {

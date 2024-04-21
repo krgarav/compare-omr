@@ -6,7 +6,7 @@ import { Button } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Table from "../UI/Table";
-import { useLocation, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import DownloadIcon from "@mui/icons-material/Download";
 
 const Correction = () => {
@@ -18,7 +18,7 @@ const Correction = () => {
     if (dataCtx.imageMappedData.length === 0) {
       navigate("/comparecsv", { replace: true });
     }
-  }, []);
+  },[]);
 
   useEffect(() => {
     const confirmExit = (e) => {
@@ -99,7 +99,7 @@ const Correction = () => {
       <div
         className={`flex lg:flex-row md:flex-col justify-between animate-slide-left-to-right ${classes.correction} `}
       >
-        <div className="w-full">
+        {state.length!==0 &&<div className="w-full">
           <div className={`text-center text-3xl font-bold ${classes.imgdiv}`}>
             <h1 className={`text-center text-3xl font-bold ${classes.imgHead}`}>
               Image Name : {state[currIndex].img.imgName}
@@ -111,8 +111,8 @@ const Correction = () => {
             className={`w-full  object-contain p-5 ${classes.imgContainer}`}
             alt="omr sheet"
           />
-        </div>
-        <div className="w-full  ">
+        </div>}
+        {state.length!==0&& <div className="w-full  ">
           <h1 className="text-center text-3xl font-bold m-5">
             {currIndex + 1} of {state.length}
           </h1>
@@ -144,7 +144,7 @@ const Correction = () => {
               NEXT
             </Button>
           </div>
-        </div>
+        </div>}
       </div>
     </>
   );

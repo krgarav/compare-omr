@@ -1,7 +1,5 @@
 import Homepage from "./Pages/Homepage";
 import { Routes, Route, Navigate } from "react-router-dom";
-
-import React from "react";
 import Correction from "./Pages/Correction";
 
 const App = () => {
