@@ -97,8 +97,8 @@ const OptimisedList = () => {
     <Box
       sx={{
         width: "100%",
-        minHeight: "50dvh",
-        maxHeight: "50dvh",
+        minHeight: "40dvh",
+        maxHeight: "40dvh",
         // bgcolor: "background.paper",
         overflowY: "scroll",
         display: "flex",

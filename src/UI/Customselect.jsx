@@ -9,7 +9,7 @@ import dataContext from "../Store/DataContext";
 import debounce from "lodash/debounce";
 
 const Customselect = (props) => {
-  const [selectValue, setSelectValue] = useState();
+  const [selectValue, setSelectValue] = useState("");
   const dataCtx = useContext(dataContext);
   useEffect(() => {
     if (props.label === "Select Image Column") {

@@ -19,10 +19,9 @@
   border : 1px solid white;
   background-color: aliceblue;
   border-radius: 10px ;
-
+  height: 100%;
 }
 .imgdiv{
-  height: 5vh;
   width: 100%;
   text-align: center;
   display: flex;

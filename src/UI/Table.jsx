@@ -7,7 +7,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Button } from "@mui/material";
-
 import SaveIcon from "@mui/icons-material/Save";
 import dataContext from "../Store/DataContext";
 import { toast } from "react-toastify";
@@ -17,17 +16,15 @@ function createData(name, calories, fat, carbs, protein) {
 }
 
 const TableCol = (props) => {
-  // const [objData, setObjData] = useState([]);
   const [resultObj, setResultObj] = useState([]);
   const inputRef = useRef();
   const dataCtx = useContext(dataContext);
+  console.log(dataCtx.imageMappedData)
+  
   useEffect(() => {
-    console.log(props.data);
     inputRef.current.value = props.data.corrected;
-  }, [dataCtx.imageMappedData]);
+  }, [dataCtx.imageMappedData,props.data]);
   useEffect(() => {
-    // setObjData(props.data);
-
     setResultObj(props.data);
   }, [props.data]);
 
@@ -70,7 +67,6 @@ const TableCol = (props) => {
       draggable: true,
       progress: undefined,
       theme: "dark",
-     
     });
   };
 
@@ -91,7 +87,7 @@ const TableCol = (props) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row,index) => (
+          {rows.map((row, index) => (
             <TableRow key={index}>
               <TableCell component="th" scope="row">
                 {dataCtx.primaryKey} : {row.name}

@@ -115,7 +115,7 @@ const Homepage = () => {
           }
         }
         dataCtx.setImageMappedData(objArr);
-        navigate("/correct_compare_csv");
+        navigate("/correct_compare_csv", { state: objArr });
       } catch (err) {
         console.log(err);
       }
